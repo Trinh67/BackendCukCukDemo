@@ -131,7 +131,7 @@ namespace MISA_API_Demo.Database
         public IEnumerable<TEntity> GetWithRange<TEntity>(int startPoint, int number)
         {
             string className = typeof(TEntity).Name;
-            var sql = $"SELECT * FROM {className} LIMIT {startPoint}, {number}";
+            var sql = $"SELECT * FROM {className}  ORDER BY {className}Code ASC LIMIT {startPoint}, {number}";
             var entities = _db.Query<TEntity>(sql);
             return entities;
         }
