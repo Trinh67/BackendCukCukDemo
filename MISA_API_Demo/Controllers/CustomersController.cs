@@ -25,7 +25,7 @@ namespace MISA_API_Demo.Controllers
                 Success = true,
                 Message = "Thành công",
                 Data = customers,
-                //MISACode = "OK",
+                MISACode = EnumCodes.Success,
             });
         }
         public override IActionResult Post([FromBody] Customer customer)

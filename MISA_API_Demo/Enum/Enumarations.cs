@@ -11,13 +11,28 @@ namespace MISA_API_Demo.Models
         /// Lỗi dữ liệu
         /// </summary>
         BadRequest = 400,
+        /// <summary>
+        /// Thao tác dữ liệu thành công
+        /// </summary>
         Success = 200,
+        /// <summary>
+        /// Lỗi ngoại lệ
+        /// </summary>
         Exception = 500
     }
     public enum Gender
     {
+        /// <summary>
+        /// Nam
+        /// </summary>
         Male = 1,
+        /// <summary>
+        /// Nữ
+        /// </summary>
         Female = 0,
+        /// <summary>
+        /// Khác
+        /// </summary>
         Other = 2
     }
 }

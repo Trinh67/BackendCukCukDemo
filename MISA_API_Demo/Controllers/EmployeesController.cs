@@ -13,14 +13,14 @@ namespace MISA_API_Demo.Controllers
     {
         public override IActionResult Get()
         {
-            var sql = "Select * from Employee";
+            var sql = "Select * from Employee ORDER BY EmployeeCode ASC";
             var employees = _db.GetAll<Employee>(sql);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
                 Message = "Thành công",
                 Data = employees,
-                //MISACode = "OK",
+                MISACode = EnumCodes.Success,
             });
         }
         public override IActionResult Post([FromBody] Employee employee)
@@ -69,7 +69,7 @@ namespace MISA_API_Demo.Controllers
             else if ((EmployeeCode.ToString() != "no") && (Position.ToString() == "no") && (Department.ToString() != "no")) sql = $"SELECT * FROM Employee WHERE EmployeeCode LIKE '%{EmployeeCode.ToString()}%' AND DepartmentId = '{Department}'";
             else if ((EmployeeCode.ToString() == "no") && (Position.ToString() != "no") && (Department.ToString() != "no")) sql = $"SELECT * FROM Employee WHERE PositionId = '{Position}' AND DepartmentId = '{Department}'";
             else if ((EmployeeCode.ToString() != "no") && (Position.ToString() != "no") && (Department.ToString() != "no")) sql = $"SELECT * FROM Employee WHERE EmployeeCode LIKE '%{EmployeeCode.ToString()}%' AND PositionId = '{Position}' AND DepartmentId = '{Department}'";
-            else sql = $"SELECT * FROM Employee";
+            else sql = $"Select * from Employee ORDER BY EmployeeCode ASC";
             var employees = _db.GetAll<Employee>(sql);
             return Ok(new ActionServiceResult()
             {

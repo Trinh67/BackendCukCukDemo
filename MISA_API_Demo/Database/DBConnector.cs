@@ -33,7 +33,7 @@ namespace MISA_API_Demo.Database
         /// Lấy danh sách theo commandText
         /// </summary>
         /// <typeparam name="TEntity">Kiểu của object</typeparam>
-        /// <returns>mảng các object lấy đc</returns>
+        /// <returns>Mảng các object lấy đc</returns>
         public IEnumerable<TEntity> GetAll<TEntity>(string commandText)
         {
             string className = typeof(TEntity).Name;
@@ -45,9 +45,9 @@ namespace MISA_API_Demo.Database
         /// <summary>
         /// Lấy theo Id
         /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <typeparam name="TEntity">Loại đối tượng</typeparam>
+        /// <param name="id">Id của đối tượng</param>
+        /// <returns>một đối tượng</returns>
         public TEntity GetById<TEntity>(object id)
         {
             string className = typeof(TEntity).Name;
@@ -58,9 +58,9 @@ namespace MISA_API_Demo.Database
         /// <summary>
         /// Thêm mới thông tin
         /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <typeparam name="TEntity">Loại đối tượng</typeparam>
+        /// <param name="entity">Dối tượng mới</param>
+        /// <returns>Số bản ghi ảnh hưởng</returns>
         public int Insert<TEntity>(TEntity entity)
         {
             string className = typeof(TEntity).Name;
@@ -84,9 +84,9 @@ namespace MISA_API_Demo.Database
         /// <summary>
         /// Chỉnh sửa thông tin
         /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="entity"></param>
-        /// <returns></returns>
+        /// <typeparam name="TEntity">Loại đối tượng</typeparam>
+        /// <param name="entity">Đối tượng mới </param>
+        /// <returns>Số bản ghi ảnh hưởng</returns>
         public int Update<TEntity>(TEntity entity)
         {
             string className = typeof(TEntity).Name;
@@ -112,9 +112,9 @@ namespace MISA_API_Demo.Database
         /// <summary>
         /// Xóa theo Id
         /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <typeparam name="TEntity">Loại đối tượng</typeparam>
+        /// <param name="id">Id của đối tượng cần xóa</param>
+        /// <returns>Số bản ghi ảnh hường</returns>
         public int Delete<TEntity>(object id)
         {
             string className = typeof(TEntity).Name;
@@ -124,10 +124,10 @@ namespace MISA_API_Demo.Database
         /// <summary>
         /// Lấy bản ghi từ vị trí, số lượng lấy
         /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="startPoint"></param>
-        /// <param name="number"></param>
-        /// <returns></returns>
+        /// <typeparam name="TEntity">Loại đối tượng</typeparam>
+        /// <param name="startPoint">Thứ tự bản ghi bắt đầu lấy</param>
+        /// <param name="number">Số lượng bản ghi cần lấy</param>
+        /// <returns>Mảng các đối tượng</returns>
         public IEnumerable<TEntity> GetWithRange<TEntity>(int startPoint, int number)
         {
             string className = typeof(TEntity).Name;
