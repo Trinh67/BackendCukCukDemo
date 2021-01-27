@@ -58,7 +58,7 @@ namespace MISA_API_Demo.Controllers
             }
         }
         [HttpGet]
-        [Route("{EmployeeCode}/{Position}/{Department}")]
+        [Route("Search")]
         public IActionResult Search(string EmployeeCode, string Position, string Department)
         {
             string sql;

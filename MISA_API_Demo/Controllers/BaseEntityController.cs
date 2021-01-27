@@ -29,13 +29,13 @@ namespace MISA_API_Demo.Controllers
         public virtual IActionResult Get()
         {
             var databaseConnector = new DBConnector();
-            var customers = databaseConnector.GetAll<TEntity>();
+            var result = databaseConnector.GetAll<TEntity>();
             return Ok(new ActionServiceResult()
             {
                 Success = true,
                 Message = "Thành công",
-                Data = customers,
-                //MISACode = "OK",
+                Data = result,
+                MISACode = EnumCodes.Success,
             });
         }
 
@@ -49,12 +49,12 @@ namespace MISA_API_Demo.Controllers
         public virtual IActionResult Get(Guid customerId)
         {
             var databaseConnector = new DBConnector();
-            var customer = databaseConnector.GetById<TEntity>(customerId);
+            var result = databaseConnector.GetById<TEntity>(customerId);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
                 Message = "Thành công",
-                Data = customer,
+                Data = result,
                 MISACode = EnumCodes.Success,
             });
 
@@ -120,12 +120,27 @@ namespace MISA_API_Demo.Controllers
         public virtual IActionResult GetWithRange(int startPoint, int number)
         {
             var databaseConnector = new DBConnector();
-            var customers = databaseConnector.GetWithRange<TEntity>(startPoint, number);
+            var result = databaseConnector.GetWithRange<TEntity>(startPoint, number);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
                 Message = "Thành công",
-                Data = customers,
+                Data = result,
+                MISACode = EnumCodes.Success,
+            });
+        }
+        //GetMaxCode api/<Employee>/<GetMaxCode>
+        [HttpGet]
+        [Route("GetMaxCode")]
+        public virtual IActionResult GetMaxCode()
+        {
+            var databaseConnector = new DBConnector();
+            var result = databaseConnector.GetMaxCode<TEntity>();
+            return Ok(new ActionServiceResult()
+            {
+                Success = true,
+                Message = "Thành công",
+                Data = result,
                 MISACode = EnumCodes.Success,
             });
         }

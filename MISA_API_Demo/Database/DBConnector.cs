@@ -135,5 +135,17 @@ namespace MISA_API_Demo.Database
             var entities = _db.Query<TEntity>(sql);
             return entities;
         }
+        /// <summary>
+        /// Lấy mã cao nhất
+        /// </summary>
+        /// <typeparam name="TEntity">Kiểu đối tượng</typeparam>
+        /// <returns>Mã cao nhất</returns>
+        public TEntity GetMaxCode<TEntity>()
+        {
+            string className = typeof(TEntity).Name;
+            var sql = $"SELECT EmployeeCode FROM {className} WHERE {className}Code = (SELECT MAX({className}Code) FROM {className})";
+            var result = _db.Query<TEntity>(sql).FirstOrDefault();
+            return result;
+        }
     }
 }
