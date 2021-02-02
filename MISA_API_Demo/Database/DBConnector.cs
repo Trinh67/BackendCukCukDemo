@@ -10,6 +10,9 @@ namespace MISA_API_Demo.Database
 {
     public class DBConnector
     {
+        /// <summary>
+        /// Tạo kết nối
+        /// </summary>
         public static string connectionString = "Host=103.124.92.43;Port=3306; User Id=nvmanh;Password=12345678;Database=MS2_30_Trinh_CukCuk;Character Set=utf8";
         
         IDbConnection _db;
@@ -20,8 +23,8 @@ namespace MISA_API_Demo.Database
         /// <summary>
         /// Lấy danh sách
         /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="TEntity">Kiểu của object</typeparam>
+        /// <returns>List các object lấy đc</returns>
         public IEnumerable<TEntity> GetAll<TEntity>()
         {
             string className = typeof(TEntity).Name;
@@ -33,7 +36,7 @@ namespace MISA_API_Demo.Database
         /// Lấy danh sách theo commandText
         /// </summary>
         /// <typeparam name="TEntity">Kiểu của object</typeparam>
-        /// <returns>Mảng các object lấy đc</returns>
+        /// <returns>List các object lấy đc</returns>
         public IEnumerable<TEntity> GetAll<TEntity>(string commandText)
         {
             string className = typeof(TEntity).Name;
@@ -47,7 +50,7 @@ namespace MISA_API_Demo.Database
         /// </summary>
         /// <typeparam name="TEntity">Loại đối tượng</typeparam>
         /// <param name="id">Id của đối tượng</param>
-        /// <returns>một đối tượng</returns>
+        /// <returns>Bản ghi cần tìm</returns>
         public TEntity GetById<TEntity>(object id)
         {
             string className = typeof(TEntity).Name;

@@ -16,9 +16,17 @@ namespace MISA_API_Demo.Services
             _dBConnector = new DBConnector();
             _actionServiceResult = new ActionServiceResult();
         }
+
+        /// <summary>
+        /// Thêm mới khách hàng
+        /// </summary>
+        /// <param name="customer">Khách hàng mới</param>
+        /// <returns></returns>
         public ActionServiceResult InsertCustomer(Customer customer)
         {
-            // Validate
+            /**
+             * Kiểm tra thông tin trước khi thêm mới
+             */
             ValidateObj(customer, 0);
             if(_actionServiceResult.MISACode == EnumCodes.BadRequest)
             {
@@ -33,9 +41,17 @@ namespace MISA_API_Demo.Services
                 MISACode = EnumCodes.Success,
             };
         }
+
+        /// <summary>
+        /// Sửa thông tin khách hàng
+        /// </summary>
+        /// <param name="customer">Khách hàng đã được sửa</param>
+        /// <returns></returns>
         public ActionServiceResult UpdateCustomer(Customer customer)
         {
-            // Validate
+            /**
+             * Kiểm tra thông tin trước khi cập nhập
+             */
             ValidateObj(customer, 1);
             if (_actionServiceResult.MISACode == EnumCodes.BadRequest)
             {
@@ -51,6 +67,11 @@ namespace MISA_API_Demo.Services
             };
         }
 
+        /// <summary>
+        /// Validate thông tin
+        /// </summary>
+        /// <param name="customer">Khách hàng cần kiểm tra</param>
+        /// <param name="index">Chỉ mục để phân biệt: 0-Thêm mới; 1-Sửa</param>
         private void ValidateObj(Customer customer, int index)
         {
             var properties = typeof(Customer).GetProperties();

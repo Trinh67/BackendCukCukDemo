@@ -16,6 +16,10 @@ namespace MISA_API_Demo.Controllers
 {
     public class CustomersController : BaseEntityController<Customer>
     {
+        /// <summary>
+        /// Lấy danh sách khách hàng
+        /// </summary>
+        /// <returns>Danh sách khách hàng</returns>
         public override IActionResult Get()
         {
             var sql = "Select * from Customer LIMIT 10";
@@ -28,6 +32,11 @@ namespace MISA_API_Demo.Controllers
                 MISACode = EnumCodes.Success,
             });
         }
+        /// <summary>
+        /// Thêm mới khách hàng
+        /// </summary>
+        /// <param name="customer">Khách hàng mới</param>
+        /// <returns></returns>
         public override IActionResult Post([FromBody] Customer customer)
         {
             customer.CustomerId = Guid.NewGuid();
@@ -46,6 +55,11 @@ namespace MISA_API_Demo.Controllers
                     return NoContent();
             }
         }
+        /// <summary>
+        /// Sửa khách hàng
+        /// </summary>
+        /// <param name="customer">Khách hàng đã sửa</param>
+        /// <returns></returns>
         public override IActionResult Put([FromBody] Customer customer)
         {
             CustomerService customerService = new CustomerService();

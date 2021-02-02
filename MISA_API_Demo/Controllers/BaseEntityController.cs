@@ -15,6 +15,9 @@ namespace MISA_API_Demo.Controllers
     {
         protected DBConnector _db;
 
+        /// <summary>
+        /// Khởi tạo kết nối tới DB
+        /// </summary>
         public BaseEntityController()
         {
             _db = new DBConnector();
@@ -23,7 +26,7 @@ namespace MISA_API_Demo.Controllers
         /// Lấy danh sách khách hàng
         /// 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List bản ghi</returns>
         // GET: api/<CustomersController>
         [HttpGet]
         public virtual IActionResult Get()
@@ -42,8 +45,8 @@ namespace MISA_API_Demo.Controllers
         /// <summary>
         /// Lấy dữ liệu theo Id
         /// </summary>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
+        /// <param name="customerId">ID bản ghi</param>
+        /// <returns>Bản ghi cần lấy</returns>
         [HttpGet]
         [Route("{customerId}")]
         public virtual IActionResult Get(Guid customerId)
@@ -64,7 +67,7 @@ namespace MISA_API_Demo.Controllers
         /// Thêm mới dữ liệu
         /// </summary>
         /// <param name="entity">Kiểu của object</param>
-        /// <returns></returns>
+        /// <returns>effectRows</returns>
         [HttpPost]
         public virtual IActionResult Post([FromBody] TEntity entity)
         {
@@ -82,8 +85,8 @@ namespace MISA_API_Demo.Controllers
         /// <summary>
         /// Chỉnh sửa dữ liệu
         /// </summary>
-        /// <param></param>
-        /// <returns></returns>
+        /// <param>Bản ghi mới</param>
+        /// <returns>effectRows</returns>
         [HttpPut]
         public virtual IActionResult Put([FromBody] TEntity entity)
         {
@@ -99,6 +102,11 @@ namespace MISA_API_Demo.Controllers
         }
 
         // DELETE api/<CustomersController>/5
+        /// <summary>
+        /// Xóa bản ghi
+        /// </summary>
+        /// <param name="customerId">ID của bản ghi</param>
+        /// <returns>effectRows</returns>
         [HttpDelete]
         [Route("{customerId}")]
         public IActionResult Delete(Guid customerId)
@@ -115,6 +123,12 @@ namespace MISA_API_Demo.Controllers
         }
 
         // Get api/<startPoint>/<number>
+        /// <summary>
+        /// Lấy số lượng bản ghi theo khoảng
+        /// </summary>
+        /// <param name="startPoint">Bản ghi bắt đầu</param>
+        /// <param name="number">Số lượng bản ghi cần lấy</param>
+        /// <returns>List các bản ghi</returns>
         [HttpGet]
         [Route("{startPoint}/{number}")]
         public virtual IActionResult GetWithRange(int startPoint, int number)
@@ -130,6 +144,10 @@ namespace MISA_API_Demo.Controllers
             });
         }
         //GetMaxCode api/<Employee>/<GetMaxCode>
+        /// <summary>
+        /// Lấy ra mã lớn nhất trong bảng
+        /// </summary>
+        /// <returns>Mã lơn nhất</returns>
         [HttpGet]
         [Route("GetMaxCode")]
         public virtual IActionResult GetMaxCode()

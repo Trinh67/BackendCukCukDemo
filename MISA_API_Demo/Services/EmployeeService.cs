@@ -16,9 +16,17 @@ namespace MISA_API_Demo.Services
             _dBConnector = new DBConnector();
             _actionServiceResult = new ActionServiceResult();
         }
+
+        /// <summary>
+        /// Thêm mới nhân viên
+        /// </summary>
+        /// <param name="employee">Nhân viên mới</param>
+        /// <returns></returns>
         public ActionServiceResult InsertEmployee(Employee employee)
         {
-            // Validate
+            /**
+             * Kiểm tra thông tin trước khi thêm mới
+             */
             ValidateObj(employee, 0);
             if (_actionServiceResult.MISACode == EnumCodes.BadRequest)
             {
@@ -33,9 +41,17 @@ namespace MISA_API_Demo.Services
                 MISACode = EnumCodes.Success,
             };
         }
+
+        /// <summary>
+        /// Sửa thông tin nhân viên
+        /// </summary>
+        /// <param name="employee">Nhân viên đã được sửa</param>
+        /// <returns></returns>
         public ActionServiceResult UpdateEmployee(Employee employee)
         {
-            // Validate
+            /**
+             * Kiểm tra thông tin trước khi thêm mới
+             */
             ValidateObj(employee, 1);
             if (_actionServiceResult.MISACode == EnumCodes.BadRequest)
             {
@@ -51,6 +67,11 @@ namespace MISA_API_Demo.Services
             };
         }
 
+        /// <summary>
+        /// Validate thông tin
+        /// </summary>
+        /// <param name="employee">Nhân viên cần kiểm tra</param>
+        /// <param name="index">Chỉ mục để phân biệt: 0-Thêm mới; 1-Sửa</param>
         private void ValidateObj(Employee employee, int index)
         {
             var properties = typeof(Employee).GetProperties();
@@ -75,7 +96,7 @@ namespace MISA_API_Demo.Services
                     var requiredAttribute = property.GetCustomAttributes(typeof(CheckDuplicate), true).FirstOrDefault();
                     if (requiredAttribute != null)
                     {
-                        var propertyText = (requiredAttribute as CheckDuplicate).PropertyName;
+                        var propertyText = (requiredAttribute as CheckDuplicate).PropertyName;  
                         var sql = $"Select {propName} From {typeof(Employee).Name} Where {propName} = '{propValue}'";
                         var entity = _dBConnector.GetAll<Employee>(sql).FirstOrDefault();
                         if (entity != null)

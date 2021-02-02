@@ -19,7 +19,7 @@ namespace MISA_API_Demo.Models
         /// </summary>
         public string PropertyName;
         /// <summary>
-        /// Thong báo gặp lỗi
+        /// Thông báo gặp lỗi
         /// </summary>
         public string ErrorMsg;
         public Required(string propertyName, string errorMsg = null)

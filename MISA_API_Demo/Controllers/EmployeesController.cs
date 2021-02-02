@@ -11,6 +11,10 @@ namespace MISA_API_Demo.Controllers
 {
     public class EmployeesController : BaseEntityController<Employee>
     {
+        /// <summary>
+        /// Lấy tất cả bản ghi và sắp xếp
+        /// </summary>
+        /// <returns></returns>
         public override IActionResult Get()
         {
             var sql = "Select * from Employee ORDER BY EmployeeCode ASC";
@@ -23,6 +27,11 @@ namespace MISA_API_Demo.Controllers
                 MISACode = EnumCodes.Success,
             });
         }
+        /// <summary>
+        /// Tạo mới bản ghi
+        /// </summary>
+        /// <param name="employee">Bản ghi mới</param>
+        /// <returns></returns>
         public override IActionResult Post([FromBody] Employee employee)
         {
             employee.EmployeeId = Guid.NewGuid();
@@ -41,6 +50,11 @@ namespace MISA_API_Demo.Controllers
                     return NoContent();
             }
         }
+        /// <summary>
+        /// Sửa bản ghi
+        /// </summary>
+        /// <param name="employee">Bản ghi đã sửa</param>
+        /// <returns></returns>
         public override IActionResult Put([FromBody] Employee employee)
         {
             EmployeeService employeeService = new EmployeeService();
@@ -57,6 +71,13 @@ namespace MISA_API_Demo.Controllers
                     return NoContent();
             }
         }
+        /// <summary>
+        /// Tìm kiếm bản ghi theo điều kiện
+        /// </summary>
+        /// <param name="EmployeeCode">Mã nhân viên</param>
+        /// <param name="Position">Vị trí</param>
+        /// <param name="Department">Phòng ban</param>
+        /// <returns>List bản ghi</returns>
         [HttpGet]
         [Route("Search")]
         public IActionResult Search(string EmployeeCode, string Position, string Department)
