@@ -24,9 +24,9 @@ namespace MISA_API_Demo.Controllers
         }
         /// <summary>
         /// Lấy danh sách khách hàng
-        /// 
         /// </summary>
         /// <returns>List bản ghi</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         // GET: api/<CustomersController>
         [HttpGet]
         public virtual IActionResult Get()
@@ -47,6 +47,7 @@ namespace MISA_API_Demo.Controllers
         /// </summary>
         /// <param name="customerId">ID bản ghi</param>
         /// <returns>Bản ghi cần lấy</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         [HttpGet]
         [Route("{customerId}")]
         public virtual IActionResult Get(Guid customerId)
@@ -67,7 +68,8 @@ namespace MISA_API_Demo.Controllers
         /// Thêm mới dữ liệu
         /// </summary>
         /// <param name="entity">Kiểu của object</param>
-        /// <returns>effectRows</returns>
+        /// <returns>Số bản ghi ảnh hưởng</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         [HttpPost]
         public virtual IActionResult Post([FromBody] TEntity entity)
         {
@@ -86,7 +88,8 @@ namespace MISA_API_Demo.Controllers
         /// Chỉnh sửa dữ liệu
         /// </summary>
         /// <param>Bản ghi mới</param>
-        /// <returns>effectRows</returns>
+        /// <returns>Số bản ghi ảnh hưởng</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         [HttpPut]
         public virtual IActionResult Put([FromBody] TEntity entity)
         {
@@ -106,7 +109,8 @@ namespace MISA_API_Demo.Controllers
         /// Xóa bản ghi
         /// </summary>
         /// <param name="customerId">ID của bản ghi</param>
-        /// <returns>effectRows</returns>
+        /// <returns>Số bản ghi ảnh hưởng</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         [HttpDelete]
         [Route("{customerId}")]
         public IActionResult Delete(Guid customerId)
@@ -129,6 +133,7 @@ namespace MISA_API_Demo.Controllers
         /// <param name="startPoint">Bản ghi bắt đầu</param>
         /// <param name="number">Số lượng bản ghi cần lấy</param>
         /// <returns>List các bản ghi</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         [HttpGet]
         [Route("{startPoint}/{number}")]
         public virtual IActionResult GetWithRange(int startPoint, int number)
@@ -147,7 +152,8 @@ namespace MISA_API_Demo.Controllers
         /// <summary>
         /// Lấy ra mã lớn nhất trong bảng
         /// </summary>
-        /// <returns>Mã lơn nhất</returns>
+        /// <returns>Mã lớn nhất</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         [HttpGet]
         [Route("GetMaxCode")]
         public virtual IActionResult GetMaxCode()

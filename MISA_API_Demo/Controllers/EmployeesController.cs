@@ -14,7 +14,8 @@ namespace MISA_API_Demo.Controllers
         /// <summary>
         /// Lấy tất cả bản ghi và sắp xếp
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Response tương ứng cho Client</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public override IActionResult Get()
         {
             var sql = "Select * from Employee ORDER BY EmployeeCode ASC";
@@ -28,10 +29,11 @@ namespace MISA_API_Demo.Controllers
             });
         }
         /// <summary>
-        /// Tạo mới bản ghi
+        /// Tạo mới nhân viên
         /// </summary>
-        /// <param name="employee">Bản ghi mới</param>
-        /// <returns></returns>
+        /// <param name="employee">Thực thể nhân viên mới</param>
+        /// <returns>Response tương ứng cho Client</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public override IActionResult Post([FromBody] Employee employee)
         {
             employee.EmployeeId = Guid.NewGuid();
@@ -51,10 +53,11 @@ namespace MISA_API_Demo.Controllers
             }
         }
         /// <summary>
-        /// Sửa bản ghi
+        /// Sửa thông tin nhân viên
         /// </summary>
-        /// <param name="employee">Bản ghi đã sửa</param>
-        /// <returns></returns>
+        /// <param name="employee">Thực thể đã sửa</param>
+        /// <returns>Response tương ứng cho Client</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public override IActionResult Put([FromBody] Employee employee)
         {
             EmployeeService employeeService = new EmployeeService();
@@ -78,6 +81,7 @@ namespace MISA_API_Demo.Controllers
         /// <param name="Position">Vị trí</param>
         /// <param name="Department">Phòng ban</param>
         /// <returns>List bản ghi</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         [HttpGet]
         [Route("Search")]
         public IActionResult Search(string EmployeeCode, string Position, string Department)

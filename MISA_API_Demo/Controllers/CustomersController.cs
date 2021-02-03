@@ -20,6 +20,7 @@ namespace MISA_API_Demo.Controllers
         /// Lấy danh sách khách hàng
         /// </summary>
         /// <returns>Danh sách khách hàng</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public override IActionResult Get()
         {
             var sql = "Select * from Customer LIMIT 10";
@@ -35,8 +36,9 @@ namespace MISA_API_Demo.Controllers
         /// <summary>
         /// Thêm mới khách hàng
         /// </summary>
-        /// <param name="customer">Khách hàng mới</param>
-        /// <returns></returns>
+        /// <param name="customer">Thực thể khách hàng mới</param>
+        /// <returns>Response tương ứng cho Client</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public override IActionResult Post([FromBody] Customer customer)
         {
             customer.CustomerId = Guid.NewGuid();
@@ -58,8 +60,9 @@ namespace MISA_API_Demo.Controllers
         /// <summary>
         /// Sửa khách hàng
         /// </summary>
-        /// <param name="customer">Khách hàng đã sửa</param>
-        /// <returns></returns>
+        /// <param name="customer">Thực thể khách hàng đã sửa</param>
+        /// <returns>Response tương ứng cho Client</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public override IActionResult Put([FromBody] Customer customer)
         {
             CustomerService customerService = new CustomerService();

@@ -20,8 +20,9 @@ namespace MISA_API_Demo.Services
         /// <summary>
         /// Thêm mới nhân viên
         /// </summary>
-        /// <param name="employee">Nhân viên mới</param>
-        /// <returns></returns>
+        /// <param name="employee">Thực thể nhân viên mới</param>
+        /// <returns>Response tương ứng cho Client</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public ActionServiceResult InsertEmployee(Employee employee)
         {
             /**
@@ -45,8 +46,9 @@ namespace MISA_API_Demo.Services
         /// <summary>
         /// Sửa thông tin nhân viên
         /// </summary>
-        /// <param name="employee">Nhân viên đã được sửa</param>
-        /// <returns></returns>
+        /// <param name="employee">Thực thể nhân viên đã được sửa</param>
+        /// <returns>Response tương ứng cho CLient</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public ActionServiceResult UpdateEmployee(Employee employee)
         {
             /**
@@ -70,8 +72,9 @@ namespace MISA_API_Demo.Services
         /// <summary>
         /// Validate thông tin
         /// </summary>
-        /// <param name="employee">Nhân viên cần kiểm tra</param>
+        /// <param name="employee">Thực thể nhân viên cần kiểm tra</param>
         /// <param name="index">Chỉ mục để phân biệt: 0-Thêm mới; 1-Sửa</param>
+        /// CreatedBy: TXTrinh (02/02/2021)
         private void ValidateObj(Employee employee, int index)
         {
             var properties = typeof(Employee).GetProperties();

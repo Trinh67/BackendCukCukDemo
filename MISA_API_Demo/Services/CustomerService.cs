@@ -20,8 +20,9 @@ namespace MISA_API_Demo.Services
         /// <summary>
         /// Thêm mới khách hàng
         /// </summary>
-        /// <param name="customer">Khách hàng mới</param>
-        /// <returns></returns>
+        /// <param name="customer">Thực thể khách hàng</param>
+        /// <returns>Response tương ứng cho Client</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public ActionServiceResult InsertCustomer(Customer customer)
         {
             /**
@@ -45,8 +46,9 @@ namespace MISA_API_Demo.Services
         /// <summary>
         /// Sửa thông tin khách hàng
         /// </summary>
-        /// <param name="customer">Khách hàng đã được sửa</param>
-        /// <returns></returns>
+        /// <param name="customer">Thực thể khách hàng đã được sửa</param>
+        /// <returns>Response tương ứng cho Client</returns>
+        /// CreatedBy: TXTrinh (02/02/2021)
         public ActionServiceResult UpdateCustomer(Customer customer)
         {
             /**
@@ -72,6 +74,7 @@ namespace MISA_API_Demo.Services
         /// </summary>
         /// <param name="customer">Khách hàng cần kiểm tra</param>
         /// <param name="index">Chỉ mục để phân biệt: 0-Thêm mới; 1-Sửa</param>
+        /// CreatedBy: TXTrinh (02/02/2021)
         private void ValidateObj(Customer customer, int index)
         {
             var properties = typeof(Customer).GetProperties();
