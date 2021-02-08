@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using MISA.DataLayer;
 using MISA.Common.Models;
+using MISA.Service;
 
 namespace MISA.Services
 {
-    public class CustomerService
+    public class CustomerService:BaseService<Customer>
     {
         CustomerRepositoty _dBConnector;
         ActionServiceResult _actionServiceResult;
@@ -25,10 +26,12 @@ namespace MISA.Services
         /// CreatedBy: TXTrinh (02/02/2021)
         public ActionServiceResult InsertCustomer(Customer customer)
         {
+            var errMsg = new ErroMsg();
             /**
              * Kiểm tra thông tin trước khi thêm mới
              */
-            ValidateObj(customer, 0);
+            ValidateObj(customer, 0, errMsg);
+            var k = errMsg;
             if(_actionServiceResult.MISACode == EnumCodes.BadRequest)
             {
                 return _actionServiceResult;
@@ -51,10 +54,11 @@ namespace MISA.Services
         /// CreatedBy: TXTrinh (02/02/2021)
         public ActionServiceResult UpdateCustomer(Customer customer)
         {
+            var errMsg = new ErroMsg();
             /**
              * Kiểm tra thông tin trước khi cập nhập
              */
-            ValidateObj(customer, 1);
+            ValidateObj(customer, 1, errMsg);
             if (_actionServiceResult.MISACode == EnumCodes.BadRequest)
             {
                 return _actionServiceResult;
@@ -75,7 +79,7 @@ namespace MISA.Services
         /// <param name="customer">Khách hàng cần kiểm tra</param>
         /// <param name="index">Chỉ mục để phân biệt: 0-Thêm mới; 1-Sửa</param>
         /// CreatedBy: TXTrinh (02/02/2021)
-        private void ValidateObj(Customer customer, int index)
+        private void ValidateObj(Customer customer, int index, ErroMsg errorMsg = null)
         {
             var properties = typeof(Customer).GetProperties();
             foreach(var property in properties)
@@ -89,6 +93,7 @@ namespace MISA.Services
                     if(requiredAttribute != null)
                     {
                         var propertyText = (requiredAttribute as Required).PropertyName;
+                        errorMsg.UserMsg.Add($"{propertyText} {MISA.Common.Properties.Resources.ErrorRequired} ");
                         _actionServiceResult.Message += $"{propertyText} {MISA.Common.Properties.Resources.ErrorRequired} ";
                     }    
                     _actionServiceResult.MISACode = EnumCodes.BadRequest;
@@ -103,6 +108,7 @@ namespace MISA.Services
                         var isDuplicate = _dBConnector.checkDuplicate(propName, propValue);
                         if(isDuplicate)
                         {
+                            errorMsg.UserMsg.Add($"{propertyText} {MISA.Common.Properties.Resources.ErrorExisted} ");
                             _actionServiceResult.Message += $"{propertyText} {MISA.Common.Properties.Resources.ErrorExisted} ";
                             _actionServiceResult.MISACode = EnumCodes.BadRequest;
                         }

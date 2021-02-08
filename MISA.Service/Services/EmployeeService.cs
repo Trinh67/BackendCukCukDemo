@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using MISA.DataLayer;
 using MISA.Common.Models;
 using MISA.Common.Properties;
+using MISA.Service;
 
 namespace MISA.Services
 {
-    public class EmployeeService
+    public class EmployeeService: BaseService<Employee>
     {
         EmployeeRepositoty _dBConnector;
         ActionServiceResult _actionServiceResult;

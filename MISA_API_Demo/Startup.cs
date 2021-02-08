@@ -62,6 +62,15 @@ namespace MISA_API_Demo
                     c.RoutePrefix = "swagger";
                 });
 
+            // X? lí exeption chung
+            //app.UseExceptionHandler(appError =>
+            //{
+            //    appError.Run(async context =>
+            //    {
+                    
+            //    });
+            //});
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

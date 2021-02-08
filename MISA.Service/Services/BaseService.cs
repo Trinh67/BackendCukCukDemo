@@ -6,17 +6,22 @@ using MISA.DataLayer;
 
 namespace MISA.Service
 {
-    class BaseService<TEntity>
+    public class BaseService<TEntity>
     {
-        DBConnector<TEntity> _dBConnector;
-        ActionServiceResult _actionServiceResult;
-        string className = typeof(TEntity).Name;
+        //DBConnector<TEntity> _dBConnector;
+        //ActionServiceResult _actionServiceResult;
+        //string className = typeof(TEntity).Name;
 
+        /// <summary>
+        /// Lấy toàn bộ dữ liệu
+        /// </summary>
+        /// <returns>ServiceResult</returns>
+        /// Created By: TXTrinh (08/02/2021)
         public ActionServiceResult GetData()
         {
-            _dBConnector = new DBConnector<TEntity>();
-            _actionServiceResult = new ActionServiceResult();
-            var data = _dBConnector.GetAll();
+            var _dBConnector = new DBConnector<TEntity>();
+            var _actionServiceResult = new ActionServiceResult();
+            _actionServiceResult.Data = _dBConnector.GetAll();
             return _actionServiceResult;
         }
     }

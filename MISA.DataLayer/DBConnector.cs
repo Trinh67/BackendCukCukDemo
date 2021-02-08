@@ -78,51 +78,23 @@ namespace MISA.DataLayer
         public int Insert(TEntity entity)
         {
             string className = typeof(TEntity).Name;
-            var properties = typeof(TEntity).GetProperties();
-            var parameters = new DynamicParameters();
-            var sqlPropertyBuilder = string.Empty;
-            var sqlParamBuilder = string.Empty;
-            foreach(var property in properties)
-            {
-                var propertyName = property.Name;
-                var propertyValue = property.GetValue(entity);
-                parameters.Add($"@{propertyName}", propertyValue);
-                sqlPropertyBuilder += $",{propertyName}";
-                sqlParamBuilder += $",@{propertyName}";
-            }
-        
-            var sql = $"INSERT INTO {className}({sqlPropertyBuilder.Substring(1)}) VALUE({sqlParamBuilder.Substring(1)})";
-            var effectRows = _db.Execute(sql, parameters);
-            return effectRows;
+            string proc = $"Proc_Insert{className}";
+            var res = _db.Execute(proc, param: entity, commandType: CommandType.StoredProcedure);
+            return res;
         }
         /// <summary>
         /// Chỉnh sửa thông tin
         /// </summary>
         /// <typeparam name="TEntity">Loại đối tượng</typeparam>
-        /// <param name="entity">Đối tượng mới </param>
+        /// <param name="entity">Đối tượng mới đã chỉnh sửa</param>
         /// <returns>Số bản ghi ảnh hưởng</returns>
         /// CreatedBy: TXTrinh (02/02/2021)
         public int Update(TEntity entity)
         {
             string className = typeof(TEntity).Name;
-            var properties = typeof(TEntity).GetProperties();
-            var parameters = new DynamicParameters();
-            var sqlBuilder = string.Empty;
-            var sqlParamBuilder = string.Empty;
-            foreach (var property in properties)
-            {
-                var propertyName = property.Name;
-                var propertyValue = property.GetValue(entity);
-                parameters.Add($"@{propertyName}", propertyValue);
-                sqlBuilder += $",{propertyName} = @{propertyName}";
-            }
-            sqlBuilder = sqlBuilder.Substring(1);
-            int position = sqlBuilder.IndexOf(",");
-            var sqlCompare = sqlBuilder.Substring(0, position);
-            sqlBuilder = sqlBuilder.Substring(position + 1);
-            var sql = $"UPDATE {className} SET {sqlBuilder} WHERE {sqlCompare}";
-            var effectRows = _db.Execute(sql, parameters);
-            return effectRows;
+            string proc = $"Proc_Update{className}ById";
+            var res = _db.Execute(proc, param: entity, commandType: CommandType.StoredProcedure);
+            return res;
         }
         /// <summary>
         /// Xóa theo Id

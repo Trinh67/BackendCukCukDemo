@@ -73,6 +73,27 @@ namespace MISA.Common.Models
         /// Địa chỉ
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// Ngày tạo
+        /// </summary>
+        public DateTime? CreateDate { get; set; }
+
+        /// <summary>
+        /// Người tạo
+        /// </summary>
+        public string CreateBy { get; set; }
+
+        /// <summary>
+        /// Ngày chỉnh sửa
+        /// </summary>
+        public DateTime? ModifyDate { get; set; }
+
+        /// <summary>
+        /// Người chỉnh sửa
+        /// </summary>
+        public string ModifyBy { get; set; }
+
         #endregion
     }
 }

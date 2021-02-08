@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MISA.DataLayer;
 using MISA.Common.Models;
+using MISA.Service;
 
 namespace MISA_API_Demo.Controllers
 {
@@ -14,12 +15,14 @@ namespace MISA_API_Demo.Controllers
     public class BaseEntityController<TEntity> : ControllerBase
     {
         protected DBConnector<TEntity> _db;
+        protected BaseService<TEntity> _base;
 
         /// <summary>
         /// Khởi tạo kết nối tới DB
         /// </summary>
         public BaseEntityController()
         {
+            _base = new BaseService<TEntity>();
             _db = new DBConnector<TEntity>();
         }
         /// <summary>
@@ -31,8 +34,11 @@ namespace MISA_API_Demo.Controllers
         [HttpGet]
         public virtual IActionResult Get()
         {
-            var result = _db.GetAll();
-            return StatusCode(200, result);
+            var res = _base.GetData();
+            var entities = res.Data as List<TEntity>;
+            if (entities.Count == 0)
+                return StatusCode(204, res.Data);
+            else return StatusCode(200, res.Data);
         }
 
         /// <summary>
