@@ -4,23 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MISA_API_Demo.Database;
-using MISA_API_Demo.Models;
+using MISA.DataLayer;
+using MISA.Common.Models;
 
 namespace MISA_API_Demo.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class BaseEntityController<TEntity> : ControllerBase
     {
-        protected DBConnector _db;
+        protected DBConnector<TEntity> _db;
 
         /// <summary>
         /// Khởi tạo kết nối tới DB
         /// </summary>
         public BaseEntityController()
         {
-            _db = new DBConnector();
+            _db = new DBConnector<TEntity>();
         }
         /// <summary>
         /// Lấy danh sách khách hàng
@@ -31,15 +31,8 @@ namespace MISA_API_Demo.Controllers
         [HttpGet]
         public virtual IActionResult Get()
         {
-            var databaseConnector = new DBConnector();
-            var result = databaseConnector.GetAll<TEntity>();
-            return Ok(new ActionServiceResult()
-            {
-                Success = true,
-                Message = "Thành công",
-                Data = result,
-                MISACode = EnumCodes.Success,
-            });
+            var result = _db.GetAll();
+            return StatusCode(200, result);
         }
 
         /// <summary>
@@ -49,15 +42,14 @@ namespace MISA_API_Demo.Controllers
         /// <returns>Bản ghi cần lấy</returns>
         /// CreatedBy: TXTrinh (02/02/2021)
         [HttpGet]
-        [Route("{customerId}")]
-        public virtual IActionResult Get(Guid customerId)
+        [Route("{id}")]
+        public virtual IActionResult Get(Guid id)
         {
-            var databaseConnector = new DBConnector();
-            var result = databaseConnector.GetById<TEntity>(customerId);
+            var result = _db.GetById(id);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
-                Message = "Thành công",
+                Message = MISA.Common.Properties.Resources.SuccessMsg,
                 Data = result,
                 MISACode = EnumCodes.Success,
             });
@@ -73,12 +65,11 @@ namespace MISA_API_Demo.Controllers
         [HttpPost]
         public virtual IActionResult Post([FromBody] TEntity entity)
         {
-            var databaseConnector = new DBConnector();
-            var effectRows = databaseConnector.Insert<TEntity>(entity);
+            var effectRows = _db.Insert(entity);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
-                Message = "Thành công",
+                Message = MISA.Common.Properties.Resources.SuccessMsg,
                 Data = effectRows,
                 MISACode = EnumCodes.Success,
             });
@@ -93,12 +84,11 @@ namespace MISA_API_Demo.Controllers
         [HttpPut]
         public virtual IActionResult Put([FromBody] TEntity entity)
         {
-            var databaseConnector = new DBConnector();
-            var effectRows = databaseConnector.Update<TEntity>(entity);
+            var effectRows = _db.Update(entity);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
-                Message = "Thành công",
+                Message = MISA.Common.Properties.Resources.SuccessMsg,
                 Data = effectRows,
                 MISACode = EnumCodes.Success,
             });
@@ -115,12 +105,11 @@ namespace MISA_API_Demo.Controllers
         [Route("{customerId}")]
         public IActionResult Delete(Guid customerId)
         {
-            var databaseConnector = new DBConnector();
-            var effectRows = databaseConnector.Delete<TEntity>(customerId);
+            var effectRows = _db.Delete(customerId);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
-                Message = "Thành công",
+                Message = MISA.Common.Properties.Resources.SuccessMsg,
                 Data = effectRows,
                 MISACode = EnumCodes.Success,
             });
@@ -138,12 +127,11 @@ namespace MISA_API_Demo.Controllers
         [Route("{startPoint}/{number}")]
         public virtual IActionResult GetWithRange(int startPoint, int number)
         {
-            var databaseConnector = new DBConnector();
-            var result = databaseConnector.GetWithRange<TEntity>(startPoint, number);
+            var result = _db.GetWithRange(startPoint, number);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
-                Message = "Thành công",
+                Message = MISA.Common.Properties.Resources.SuccessMsg,
                 Data = result,
                 MISACode = EnumCodes.Success,
             });
@@ -158,12 +146,11 @@ namespace MISA_API_Demo.Controllers
         [Route("GetMaxCode")]
         public virtual IActionResult GetMaxCode()
         {
-            var databaseConnector = new DBConnector();
-            var result = databaseConnector.GetMaxCode<TEntity>();
+            var result = _db.GetMaxCode();
             return Ok(new ActionServiceResult()
             {
                 Success = true,
-                Message = "Thành công",
+                Message = MISA.Common.Properties.Resources.SuccessMsg,
                 Data = result,
                 MISACode = EnumCodes.Success,
             });

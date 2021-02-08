@@ -10,11 +10,11 @@ namespace MISA.Services
 {
     public class EmployeeService
     {
-        DBConnector _dBConnector;
+        EmployeeRepositoty _dBConnector;
         ActionServiceResult _actionServiceResult;
         public EmployeeService()
         {
-            _dBConnector = new DBConnector();
+            _dBConnector = new EmployeeRepositoty();
             _actionServiceResult = new ActionServiceResult();
         }
 
@@ -39,7 +39,7 @@ namespace MISA.Services
             {
                 Success = true,
                 Message = MISA.Common.Properties.Resources.SuccessMsg,
-                Data = _dBConnector.Insert<Employee>(employee),
+                Data = _dBConnector.Insert(employee),
                 MISACode = EnumCodes.Success,
             };
         }
@@ -65,7 +65,7 @@ namespace MISA.Services
             {
                 Success = true,
                 Message = MISA.Common.Properties.Resources.SuccessMsg,
-                Data = _dBConnector.Update<Employee>(employee),
+                Data = _dBConnector.Update(employee),
                 MISACode = EnumCodes.Success,
             };
         }
@@ -100,10 +100,9 @@ namespace MISA.Services
                     var requiredAttribute = property.GetCustomAttributes(typeof(CheckDuplicate), true).FirstOrDefault();
                     if (requiredAttribute != null)
                     {
-                        var propertyText = (requiredAttribute as CheckDuplicate).PropertyName;  
-                        var sql = $"Select {propName} From {typeof(Employee).Name} Where {propName} = '{propValue}'";
-                        var entity = _dBConnector.GetAll<Employee>(sql).FirstOrDefault();
-                        if (entity != null)
+                        var propertyText = (requiredAttribute as CheckDuplicate).PropertyName;
+                        var isDuplicate = _dBConnector.checkDuplicate(propName, propValue);
+                        if (isDuplicate)
                         {
                             _actionServiceResult.Message += $"{propertyText} {MISA.Common.Properties.Resources.ErrorExisted} ";
                             _actionServiceResult.MISACode = EnumCodes.BadRequest;

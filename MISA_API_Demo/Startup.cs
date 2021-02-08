@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using MISA_API_Demo.Database;
+using MISA.DataLayer;
 using Newtonsoft.Json.Serialization;
 
 namespace MISA_API_Demo

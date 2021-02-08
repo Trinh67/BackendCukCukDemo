@@ -9,11 +9,11 @@ namespace MISA.Services
 {
     public class CustomerService
     {
-        DBConnector _dBConnector;
+        CustomerRepositoty _dBConnector;
         ActionServiceResult _actionServiceResult;
         public CustomerService()
         {
-            _dBConnector = new DBConnector();
+            _dBConnector = new CustomerRepositoty();
             _actionServiceResult = new ActionServiceResult();
         }
 
@@ -38,8 +38,8 @@ namespace MISA.Services
             {
                 Success = true,
                 Message = MISA.Common.Properties.Resources.SuccessMsg,
-                Data = _dBConnector.Insert<Customer>(customer),
-                MISACode = EnumCodes.Success,
+                Data = _dBConnector.Insert(customer),
+                MISACode = EnumCodes.Created,
             };
         }
 
@@ -64,7 +64,7 @@ namespace MISA.Services
             {
                 Success = true,
                 Message = MISA.Common.Properties.Resources.SuccessMsg,
-                Data = _dBConnector.Update<Customer>(customer),
+                Data = _dBConnector.Update(customer),
                 MISACode = EnumCodes.Success,
             };
         }
@@ -100,9 +100,8 @@ namespace MISA.Services
                     if (requiredAttribute != null)
                     {
                         var propertyText = (requiredAttribute as CheckDuplicate).PropertyName;
-                        var sql = $"Select {propName} From {typeof(Customer).Name} Where {propName} = '{propValue}'";
-                        var entity = _dBConnector.GetAll<Customer>(sql).FirstOrDefault();
-                        if(entity != null)
+                        var isDuplicate = _dBConnector.checkDuplicate(propName, propValue);
+                        if(isDuplicate)
                         {
                             _actionServiceResult.Message += $"{propertyText} {MISA.Common.Properties.Resources.ErrorExisted} ";
                             _actionServiceResult.MISACode = EnumCodes.BadRequest;

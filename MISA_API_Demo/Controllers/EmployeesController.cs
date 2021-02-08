@@ -4,30 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MISA_API_Demo.Models;
-using MISA_API_Demo.Services;
+using MISA.DataLayer;
+using MISA.Common.Models;
+using MISA.Services;
 
 namespace MISA_API_Demo.Controllers
 {
     public class EmployeesController : BaseEntityController<Employee>
     {
-        /// <summary>
-        /// Lấy tất cả bản ghi và sắp xếp
-        /// </summary>
-        /// <returns>Response tương ứng cho Client</returns>
-        /// CreatedBy: TXTrinh (02/02/2021)
-        public override IActionResult Get()
-        {
-            var sql = "Select * from Employee ORDER BY EmployeeCode ASC";
-            var employees = _db.GetAll<Employee>(sql);
-            return Ok(new ActionServiceResult()
-            {
-                Success = true,
-                Message = "Thành công",
-                Data = employees,
-                MISACode = EnumCodes.Success,
-            });
-        }
+
         /// <summary>
         /// Tạo mới nhân viên
         /// </summary>
@@ -84,22 +69,13 @@ namespace MISA_API_Demo.Controllers
         /// CreatedBy: TXTrinh (02/02/2021)
         [HttpGet]
         [Route("Search")]
-        public IActionResult Search(string EmployeeCode, string Position, string Department)
+        public IActionResult Search(string EmployeeCode, string PositionId, string DepartmentId)
         {
-            string sql;
-            if ((EmployeeCode.ToString() != "no") && (Position.ToString() == "no") && (Department.ToString() == "no")) sql = $"SELECT * FROM Employee WHERE EmployeeCode LIKE '%{EmployeeCode.ToString()}%'";
-            else if ((EmployeeCode.ToString() == "no") && (Position.ToString() != "no") && (Department.ToString() == "no")) sql = $"SELECT * FROM Employee WHERE PositionId = '{Position}'";
-            else if ((EmployeeCode.ToString() == "no") && (Position.ToString() == "no") && (Department.ToString() != "no")) sql = $"SELECT * FROM Employee WHERE DepartmentId = '{Department}'";
-            else if ((EmployeeCode.ToString() != "no") && (Position.ToString() != "no") && (Department.ToString() == "no")) sql = $"SELECT * FROM Employee WHERE EmployeeCode LIKE '%{EmployeeCode.ToString()}%' AND PositionId = '{Position}'";
-            else if ((EmployeeCode.ToString() != "no") && (Position.ToString() == "no") && (Department.ToString() != "no")) sql = $"SELECT * FROM Employee WHERE EmployeeCode LIKE '%{EmployeeCode.ToString()}%' AND DepartmentId = '{Department}'";
-            else if ((EmployeeCode.ToString() == "no") && (Position.ToString() != "no") && (Department.ToString() != "no")) sql = $"SELECT * FROM Employee WHERE PositionId = '{Position}' AND DepartmentId = '{Department}'";
-            else if ((EmployeeCode.ToString() != "no") && (Position.ToString() != "no") && (Department.ToString() != "no")) sql = $"SELECT * FROM Employee WHERE EmployeeCode LIKE '%{EmployeeCode.ToString()}%' AND PositionId = '{Position}' AND DepartmentId = '{Department}'";
-            else sql = $"Select * from Employee ORDER BY EmployeeCode ASC";
-            var employees = _db.GetAll<Employee>(sql);
+            var employees = _db.GetData("SELECT * FROM Employee e WHERE(e.EmployeeCode LIKE CONCAT('%',@EmployeeCode, '%') OR e.FullName LIKE CONCAT('%',@FullName, '%') OR e.PhoneNumber LIKE CONCAT('%',@PhoneNumber, '%')) AND((@PositionId IS NOT NULL AND e.PositionId = @PositionId) OR @PositionId IS NULL) AND((@DepartmentId IS NOT NULL AND e.DepartmentId = @DepartmentId) OR @DepartmentId IS NULL);", new { EmployeeCode = EmployeeCode, FullName = EmployeeCode, PhoneNumber = EmployeeCode, PositionId = PositionId, DepartmentId = DepartmentId }, System.Data.CommandType.Text);
             return Ok(new ActionServiceResult()
             {
                 Success = true,
-                Message = "Thành công",
+                Message = MISA.Common.Properties.Resources.SuccessMsg,
                 Data = employees,
                 MISACode = EnumCodes.Success,
             });

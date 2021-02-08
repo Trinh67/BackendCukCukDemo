@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
-using MISA_API_Demo.Database;
-using MISA_API_Demo.Models;
-using MISA_API_Demo.Services;
+using MISA.DataLayer;
+using MISA.Common.Models;
+using MISA.Services;
 using MySql.Data.MySqlClient;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,23 +16,6 @@ namespace MISA_API_Demo.Controllers
 {
     public class CustomersController : BaseEntityController<Customer>
     {
-        /// <summary>
-        /// Lấy danh sách khách hàng
-        /// </summary>
-        /// <returns>Danh sách khách hàng</returns>
-        /// CreatedBy: TXTrinh (02/02/2021)
-        public override IActionResult Get()
-        {
-            var sql = "Select * from Customer LIMIT 10";
-            var customers = _db.GetAll<Customer>(sql);
-            return Ok(new ActionServiceResult()
-            {
-                Success = true,
-                Message = "Thành công",
-                Data = customers,
-                MISACode = EnumCodes.Success,
-            });
-        }
         /// <summary>
         /// Thêm mới khách hàng
         /// </summary>
@@ -47,8 +30,11 @@ namespace MISA_API_Demo.Controllers
             var res = customerService.InsertCustomer(customer);
             switch (res.MISACode)
             {
-                case EnumCodes.Success:
-                    return Ok(res);
+                case EnumCodes.Created:
+                    {
+                        res.Message = MISA.Common.Properties.Resources.CreatedSuccess;
+                        return StatusCode(201, res);
+                    }
                 case EnumCodes.BadRequest:
                     return BadRequest(res);
                 case EnumCodes.Exception:

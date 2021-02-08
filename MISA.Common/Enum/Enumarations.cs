@@ -16,6 +16,10 @@ namespace MISA.Common.Models
         /// </summary>
         Success = 200,
         /// <summary>
+        /// Thêm mới, sửa bản ghi thành công
+        /// </summary>
+        Created = 201,
+        /// <summary>
         /// Lỗi ngoại lệ
         /// </summary>
         Exception = 500

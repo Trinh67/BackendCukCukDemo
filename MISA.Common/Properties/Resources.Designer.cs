@@ -61,6 +61,15 @@ namespace MISA.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thêm mới thành công.
+        /// </summary>
+        public static string CreatedSuccess {
+            get {
+                return ResourceManager.GetString("CreatedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to đã tồn tại rồi nhé!.
         /// </summary>
         public static string ErrorExisted {

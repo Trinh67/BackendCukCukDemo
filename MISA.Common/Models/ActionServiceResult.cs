@@ -4,12 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace MISA.Common.Models
-{ 
+{
     /// <summary>
     /// Mẫu dữ liệu trả về
     /// </summary>
     public class ActionServiceResult
     {
+        public ActionServiceResult(){
+            Success = true;
+        }
         /// <summary>
         /// Trạng thái trả về (true: thành công; false: thất bại)
         /// </summary>
